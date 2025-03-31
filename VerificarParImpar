@@ -1,0 +1,19 @@
+import Foundation
+
+// Función para determinar si un número es par o impar
+func verificarParImpar() {
+    print("Ingresa un número:", terminator: " ")
+    
+    if let input = readLine(), let numero = Int(input) {
+        if numero % 2 == 0 {
+            print("El número \(numero) es par.")
+        } else {
+            print("El número \(numero) es impar.")
+        }
+    } else {
+        print("Entrada no válida. Por favor, ingresa un número entero.")
+    }
+}
+
+// Ejecutar la función
+verificarParImpar()
