@@ -1,0 +1,107 @@
+import Foundation
+
+struct Producto {
+    var id: Int
+    var nombre: String
+    var cantidad: Int
+}
+
+var inventario: [Producto] = []
+
+func mostrarMenu() {
+    print("\n\tMENÚ")
+    print("1. Registrar artículos.")
+    print("2. Ver lista de artículos.")
+    print("3. Editar artículos.")
+    print("4. Eliminar artículos.")
+    print("5. Salir.")
+    print("\nElija una opción (Número): ", terminator: "")
+}
+
+func registrarArticulo() {
+    print("\n\t1. Registrar artículos")
+    print("Por favor ingresa lo que se te pide:")
+    print("Ingresa el ID del artículo:", terminator: " ")
+    guard let id = Int(readLine() ?? "") else { return }
+    print("Ingresa el nombre del artículo:", terminator: " ")
+    let nombre = readLine() ?? ""
+    print("Ingresa cuántos artículos registras:", terminator: " ")
+    guard let cantidad = Int(readLine() ?? "") else { return }
+
+    let nuevoProducto = Producto(id: id, nombre: nombre, cantidad: cantidad)
+    inventario.append(nuevoProducto)
+    print("Artículo registrado con éxito.")
+}
+
+func verListaArticulos() {
+    print("\n\t2. Lista de Productos")
+    for producto in inventario {
+        print("ID: \(producto.id) - Nombre: \(producto.nombre) - Cantidad: \(producto.cantidad)")
+    }
+}
+
+func editarArticulo() {
+    print("\n\t3. Editar artículos")
+    print("ID del artículo que quieres editar:", terminator: " ")
+    guard let id = Int(readLine() ?? "") else { return }
+
+    if let index = inventario.firstIndex(where: { $0.id == id }) {
+        print("ID: \(inventario[index].id) - Nombre: \(inventario[index].nombre) - Cantidad: \(inventario[index].cantidad)")
+        print("Nuevo nombre del artículo:", terminator: " ")
+        let nuevoNombre = readLine() ?? ""
+        print("Nueva cantidad del artículo:", terminator: " ")
+        guard let nuevaCantidad = Int(readLine() ?? "") else { return }
+
+        inventario[index].nombre = nuevoNombre
+        inventario[index].cantidad = nuevaCantidad
+        print("Artículo editado con éxito.")
+    } else {
+        print("Artículo no encontrado.")
+    }
+}
+
+func eliminarArticulo() {
+    print("\n\t4. Eliminar artículos")
+    print("Ingresa el ID del artículo a eliminar:", terminator: " ")
+    guard let id = Int(readLine() ?? "") else { return }
+
+    if let index = inventario.firstIndex(where: { $0.id == id }) {
+        let producto = inventario[index]
+        print("ID: \(producto.id) - Nombre: \(producto.nombre) - Cantidad: \(producto.cantidad)")
+        print("¿Desea eliminar este artículo? (Sí/No):", terminator: " ")
+        let confirmacion = readLine()?.lowercased()
+
+        if confirmacion == "si" {
+            inventario.remove(at: index)
+            print("Artículo eliminado con éxito.")
+        } else {
+            print("Eliminación cancelada.")
+        }
+    } else {
+        print("Artículo no encontrado.")
+    }
+}
+
+var ejecutando = true
+while ejecutando {
+    mostrarMenu()
+    if let opcion = Int(readLine() ?? "") {
+        switch opcion {
+        case 1:
+            registrarArticulo()
+        case 2:
+            verListaArticulos()
+        case 3:
+            editarArticulo()
+        case 4:
+            eliminarArticulo()
+        case 5:
+            ejecutando = false
+            print("Saliendo de la aplicación...")
+        default:
+            print("Opción no válida. Intente de nuevo.")
+        }
+    } else {
+        print("Entrada no válida. Intente de nuevo.")
+    }
+}
