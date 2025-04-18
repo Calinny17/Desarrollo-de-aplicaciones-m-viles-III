@@ -1,0 +1,79 @@
+import Foundation
+
+func mostrarMenu() {
+    print("""
+    \nMenu Principal
+
+    1. Area del Cuadrado.
+    2. Area del Rectángulo.
+    3. Area del Triangulo.
+    4. Area del Circulo.
+    5. Salir.
+    """)
+}
+
+func leerNumero(mensaje: String) -> Double {
+    print(mensaje, terminator: " ")
+    guard let input = readLine(), let numero = Double(input) else {
+        print("Entrada inválida. Intenta de nuevo.")
+        return leerNumero(mensaje: mensaje)
+    }
+    return numero
+}
+
+func calcularAreaCuadrado() {
+    print("\nArea del Cuadrado (L = L^2).")
+    let lado = leerNumero(mensaje: "Ingresa el valor del lado:")
+    let area = lado * lado
+    print("El área de tu cuadrado es: \(area)")
+}
+
+func calcularAreaRectangulo() {
+    print("\nArea del Rectángulo (A = b × h).")
+    let base = leerNumero(mensaje: "Ingresa la base:")
+    let altura = leerNumero(mensaje: "Ingresa la altura:")
+    let area = base * altura
+    print("El área de tu rectángulo es: \(area)")
+}
+
+func calcularAreaTriangulo() {
+    print("\nArea del Triángulo (A = (b × h) / 2).")
+    let base = leerNumero(mensaje: "Ingresa la base:")
+    let altura = leerNumero(mensaje: "Ingresa la altura:")
+    let area = (base * altura) / 2
+    print("El área de tu triángulo es: \(area)")
+}
+
+func calcularAreaCirculo() {
+    print("\nArea del Círculo (A = π × r^2).")
+    let radio = leerNumero(mensaje: "Ingresa el radio:")
+    let area = Double.pi * pow(radio, 2)
+    print("El área de tu círculo es: \(area)")
+}
+
+func iniciarPrograma() {
+    var continuar = true
+    while continuar {
+        mostrarMenu()
+        let opcion = leerNumero(mensaje: "Selecciona una opción (1-5):")
+
+        switch Int(opcion) {
+        case 1:
+            calcularAreaCuadrado()
+        case 2:
+            calcularAreaRectangulo()
+        case 3:
+            calcularAreaTriangulo()
+        case 4:
+            calcularAreaCirculo()
+        case 5:
+            print("¡Gracias por usar el programa! Saliendo...")
+            continuar = false
+        default:
+            print("Opción inválida. Intenta con un número del 1 al 5.")
+        }
+    }
+}
+
+// Ejecutar el programa
+iniciarPrograma()
